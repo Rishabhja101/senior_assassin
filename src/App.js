@@ -55,7 +55,7 @@ class App extends React.Component {
     //if not logged in or error
     let errorMessage = null;
     if(this.state.error){
-      errorMessage = <p className="alert alert-danger">Error: You must log in with your app.nsd.org student email</p>
+      errorMessage = <p className="alert alert-danger">Error: You must log in with your apps.nsd.org student email</p>
     }
 
     return (
