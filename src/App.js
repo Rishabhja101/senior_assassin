@@ -30,7 +30,7 @@ class App extends React.Component {
         data: res.body,
         participants: participantsArr
       });
-    })
+    });
   }
 
   onSignIn(googleUser) {
