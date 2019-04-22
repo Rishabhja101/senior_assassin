@@ -20,7 +20,7 @@ class App extends React.Component {
 
   componentDidMount() {
     //make those MF API calls BOIIIIII
-    Request.get("http://seniorassassin.us-west-2.elasticbeanstalk.com/participants")
+    Request.get("https://nchsassassin.com/participants")
     .then((res) => {
       let participantsArr = [];
       for(let participant of res.body){
