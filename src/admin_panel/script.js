@@ -39,12 +39,34 @@ function setTargets(){
   }
   targets[currentPerson] = startingPerson;
   console.log(currentPerson + ": " + targets[currentPerson]);
-  console.log(targets.length);
 }
 
 //push new targets to database
+function pushTargetsToDatabase(){
+    if(confirm("Are you sure you want to push targets to database?")){
+        $.ajax({
+            url: 'https://nchsassassin.com/participants/update',
+            type: 'PUT',
+            data: "name=" + "kyle mumma" + "&target=" + "manal khan",
+            success: function(data) {
+              alert('targets successfully pushed');
+            }
+          });
 
-
+        /*
+        for(let person in targets){
+            $.ajax({
+                url: 'https://nchsassassin.com/participants/update',
+                type: 'PUT',
+                data: "name=" + person + "&target=" + targets[person],
+                success: function(data) {
+                  alert('targets successfully pushed');
+                }
+              });
+        }
+        */
+    }
+}
 
 //------------ end reset targets -----------
 

@@ -61,7 +61,12 @@ class App extends React.Component {
 
       Request.get(url)
       .then((res) => {
-        let target = cryptr.decrypt(res.body["target"]);
+        let target = res.body["target"];
+        try {
+          target = cryptr.decrypt(target);
+        } catch(e) {
+          target = "blank";
+        }
 
         this.setState({
           loggedIn: true,
