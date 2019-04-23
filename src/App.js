@@ -10,7 +10,7 @@ class App extends React.Component {
       error: '',
       name: '',
       email: '',
-      target: 'blank',
+      target: '',
       participants: [],
       data: null
     }
@@ -39,8 +39,6 @@ class App extends React.Component {
     const email = profile.getEmail();
     const emailSubdomain = email.substring(email.indexOf("@"));
 
-    console.log(name);
-    console.log(this.state.participants);
     // not signed in with student email
     if(emailSubdomain !== "@apps.nsd.org"){
       this.setState({
@@ -51,11 +49,19 @@ class App extends React.Component {
         error: 'non_participant'
       });
     } else {
-      this.setState({
-        loggedIn: true,
-        error: '',
-        name: name,
-        email: email
+      //api get request for persons target
+      const url = "https://nchsassassin.com/participants/" + name;
+      Request.get(url)
+      .then((res) => {
+        let target = res.body["target"];
+
+        this.setState({
+          loggedIn: true,
+          error: '',
+          name: name,
+          target: target,
+          email: email
+        });
       });
     }
   }
