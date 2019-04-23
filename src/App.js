@@ -74,6 +74,9 @@ class App extends React.Component {
           <h1 className="display-4">NCHS Senior Assassin</h1>
           <p className="lead">Welcome back {this.state.name}</p>
           <p className="lead">your target for this week is {this.state.target}</p>
+        
+          <p style={{"position":"fixed", "bottom":"10px", "left": "50%", "transform": "translateX(-50%)", "width": "100%"}}>Website made by <a href="https://kylemumma.me">Kyle Mumma</a> and 
+          <a href="https://linkedin.com/in/rishabhjain101"> Rishabh Jain</a></p>
         </div>
       );
     }
@@ -102,6 +105,9 @@ class App extends React.Component {
           onFailure={this.onSignIn}
           cookiePolicy={'single_host_origin'}
         />
+
+        <p style={{"position":"fixed", "bottom":"10px", "left": "50%", "transform": "translateX(-50%)", "width": "100%"}}>Website made by <a href="https://kylemumma.me">Kyle Mumma</a> and 
+          <a href="https://linkedin.com/in/rishabhjain101"> Rishabh Jain</a></p>
       </div>
     );
   }
