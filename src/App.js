@@ -39,8 +39,13 @@ class App extends React.Component {
     const email = profile.getEmail();
     const emailSubdomain = email.substring(email.indexOf("@"));
 
-    // not signed in with student email
-    if(emailSubdomain !== "@apps.nsd.org"){
+    //javier clayton dumbass check    
+    if(email.toLowerCase() === "javier.d.clayton@gmail.com"){ 
+      name = "javier clayton"
+    }
+    
+    // not signed in with student email (with added javi check)
+    if(emailSubdomain !== "@apps.nsd.org" && email.toLowerCase() !== "javier.d.clayton@gmail.com"){
       this.setState({
         error: 'non_nsd'
       })
