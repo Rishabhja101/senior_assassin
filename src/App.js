@@ -56,9 +56,12 @@ class App extends React.Component {
     } else {
       //api get request for persons target
       const url = "https://nchsassassin.com/participants/" + name;
+      const Cryptr = require('cryptr');
+      const cryptr = new Cryptr('4t7w!z%C&F)J@NcRfUjXn2r5u8x/A?D(');
+
       Request.get(url)
       .then((res) => {
-        let target = res.body["target"];
+        let target = cryptr.decrypt(res.body["target"]);
 
         this.setState({
           loggedIn: true,
