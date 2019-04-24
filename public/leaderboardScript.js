@@ -82,29 +82,12 @@ function load(){
         .text(({place}) => place)
         .attr('class', 'position');
 
-
-    // name followed by the team
     drivers
         .append('td')
-    // include the last name in a separate element to style it differently
-    // include the team also in another element for the same reason
         .html (({name}) => `<span>${name}</span>`)
-    
-    // include a border with the color matching the team
-        .style('border-left', ({place}) => {
-        // find the color using the string value found in d.team
-        // ! if the string value has a space, camelCase the value
-            const color = place.split(' ').map((word, index) => index > 0 ? `${word[0].toUpperCase()}${word.slice(1)}` : `${word}` ).join('');
-            return `4px solid ${colors[color]}`;
-        })
-        .attr('class', 'driver');
-
-    // gap from the first driver
     drivers
         .append('td')
         .html (({kills}) => `<span>${kills}</span>`)
-        
-
 }
 
 
