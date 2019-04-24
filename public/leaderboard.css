@@ -25,6 +25,7 @@ table {
   max-width: 800px;
   /* spacing to separate the table rows vertically */
   border-spacing: 0 1rem;
+  background-color: #1B1C22;
 }
 /* with a pseudo element add a band with a repeating linear gradient */
 table:before {
