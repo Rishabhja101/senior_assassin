@@ -8,6 +8,7 @@
     <title>Senior Assassin</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <script src="leaderboardScript.js"></script>
+    <link rel="stylesheet" type="text/css" href="leaderboard.css">
 </head>
 <body class="container">
     <form id="kill_form" class="form-group text-center">
@@ -24,10 +25,25 @@
         <button class="btn btn-outline-primary" type="submit" value="submit">Submit</button>
     </form>
 
-    <button class="btn btn-primary" type="submit" value="submit">View Targets</button>
+    <button class="btn btn-primary" type="submit" value="submit" onclick="getLeaderboard()">View Targets</button>
 
     <button id="reset-button" class="btn btn-danger" value="reset-targets" onclick="resetTargetsButton()">Reset Targets</button>
 
     <div id="students-table"></div>
+
+    <table>
+        <tr>
+          <th>
+            Position
+          </th>
+          <th>
+            Name
+          </th>
+          <th>
+            Kills
+          </th>
+        </tr>
+      </table>
+
 </body>
 </html>
