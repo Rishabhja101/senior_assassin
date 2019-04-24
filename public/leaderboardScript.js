@@ -79,15 +79,19 @@ function load(){
     // position using the index of the data points
     drivers
         .append('td')
-        .text(({place}) => place)
+        .html (({place, kills}) => `${kills > 10 ? `<span>${place}</span>` : `<span style="color:red">${place}</span>`} `)
+        //.text(({place}) => place)
         .attr('class', 'position');
+    drivers
+        .append('td')  
+        .html (({name, kills}) => `${kills > 10 ? `<span>${name}</span>` : `<span style="color:red">${name}</span>`} `)
+    
+
+  //  .html (({name, team}) => `${name.split(' ').map((part, index) => index > 0 ? `<strong>${part}</strong>` : `${part}`).join(' ')} <span>${team}</span>`)
 
     drivers
         .append('td')
-        .html (({name}) => `<span>${name}</span>`)
-    drivers
-        .append('td')
-        .html (({kills}) => `<span>${kills}</span>`)
+        .html (({kills}) => `${kills > 10 ? `<span>${kills}</span>` : `<span style="color:red">${kills}</span>`} `)
 }
 
 
