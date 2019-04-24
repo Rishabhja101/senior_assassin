@@ -103,5 +103,6 @@ $(document).ready(() => {
          //   console.log(participant["kills"]);
         }
         participants = participantsArr;
+        getLeaderboard();
     });
 });
