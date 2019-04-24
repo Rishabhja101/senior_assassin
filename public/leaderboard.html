@@ -11,27 +11,10 @@
     <script src="leaderboardScript.js"></script>
     <link rel="stylesheet" type="text/css" href="leaderboard.css">
 </head>
-<body class="container">
-    <form id="kill_form" class="form-group text-center">
-        <label class="lead" for="killer_name">Name of the Killer</label>
-        <select required class="form-control mb-2" id="killer_name">
-            <option selected disabled>Name of Killer</option>
-        </select>
-
-        <label class="lead" for="killed_name">Name of the person who was killed</label>
-        <select class="form-control mb-2" id="killed_name">
-                <option selected disabled>Name of Person Who Was Killed</option>
-        </select>
-
-        <button class="btn btn-outline-primary" type="submit" value="submit">Submit</button>
-    </form>
-
-    <button class="btn btn-primary" type="submit" value="submit" onclick="getLeaderboard()">View Targets</button>
-
-    
+<body class="container">   
   </br>
   </br>
-  <div class="lead" value="Leaderboard" onclick="resetTargetsButton()" style="font-size: 30pt">Leaderboard</div>
+  <div class="lead" value="Leaderboard" style="font-size: 30pt">Leaderboard</div>
   </br>
 
     <div id="students-table"></div>
