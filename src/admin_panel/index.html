@@ -10,7 +10,7 @@
     <script src="script.js"></script>
 </head>
 <body class="container">
-    <form id="kill_form" class="form-group text-center">
+    <form onsubmit="onKillSubmit(event)" id="kill_form" class="form-group text-center">
         <label class="lead" for="killer_name">Name of the Killer</label>
         <select required class="form-control mb-2" id="killer_name">
             <option selected disabled>Name of Killer</option>

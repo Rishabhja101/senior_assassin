@@ -47,27 +47,17 @@ function setTargets(){
 //push new targets to database
 function pushTargetsToDatabase(){
     if(confirm("Are you sure you want to push targets to database?")){
-        $.ajax({
-            url: 'https://nchsassassin.com/participants/update',
-            type: 'PUT',
-            data: "name=" + "kyle mumma" + "&target=" + "manal khan",
-            success: function(data) {
-              alert('targets successfully pushed');
-            }
-          });
-
-        /*
         for(let person in targets){
             $.ajax({
                 url: 'https://nchsassassin.com/participants/update',
                 type: 'PUT',
                 data: "name=" + person + "&target=" + targets[person],
                 success: function(data) {
-                  alert('targets successfully pushed');
+                  console.log('target successfully pushed');
                 }
               });
         }
-        */
+        console.log("complete");
     }
 }
 
@@ -81,6 +71,19 @@ function onKillSubmit(event){
     }
 }
 
+function removeParticipant(participantName){
+    $.ajax({
+        url: 'https://nchsassassin.com/participants/update',
+        type: 'DELETE',
+        data: "name=" + person + "&target=" + targets[person],
+        success: function(data) {
+          console.log("participant successfully removed");
+        }
+    });
+}
+
+
+// --------- View Targets ----------------
 function viewTargets(event){
     event.preventDefault();
 
@@ -89,6 +92,8 @@ function viewTargets(event){
     }
 }
 
+
+//------------ On Load ----------------
 
 $(document).ready(() => {
     //populate dropdowns
@@ -113,11 +118,9 @@ $(document).ready(() => {
     //get participants
     $.get("https://nchsassassin.com/participants", (res) => {
         let participantsArr = [];
-        console.log(res);
         for(let participant of res){
             participantsArr.push(participant["name"]);
         }
         participants = participantsArr;
-        console.log(participants)
     });
 });
