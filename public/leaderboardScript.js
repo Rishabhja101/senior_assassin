@@ -86,7 +86,7 @@ function load(){
         .attr('class', 'position');
     drivers
         .append('td')  
-        .html (({name, state}) => `${state != "dead" ? `<span style="color:#11FE00">${name}</span>` : `<span style="color:red">${name}</span>`} `)
+        .html (({name, state}) => `${state != "dead" ? `<span style="color:#11FE00">${name.charAt(0).toUpperCase() + name.split(" ")[0].slice(1) + " " + name.split(" ")[1].charAt(0).toUpperCase() + name.split(" ")[1].slice(1)}</span>` : `<span style="color:red">${name.charAt(0).toUpperCase() + name.split(" ")[0].slice(1) + " " + name.split(" ")[1].charAt(0).toUpperCase() + name.split(" ")[1].slice(1)}</span>`} `)  //string.charAt(0).toUpperCase() + 
     
 
   //  .html (({name, team}) => `${name.split(' ').map((part, index) => index > 0 ? `<strong>${part}</strong>` : `${part}`).join(' ')} <span>${team}</span>`)
