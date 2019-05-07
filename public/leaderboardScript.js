@@ -97,6 +97,7 @@ function load(){
 }
 
 
+
 $(document).ready(() => {
     //get participants
     $.get("https://nchsassassin.com/participants", (res) => {
