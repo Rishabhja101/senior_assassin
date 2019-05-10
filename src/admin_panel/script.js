@@ -19,6 +19,9 @@ function remove(arr, value){
 }
 
 function setTargets(){
+  
+  Korynne_Leon.setTargets("Jacob Kim");
+
   participantsArr = participants.slice();
 
   const startingPerson = participantsArr.pop();

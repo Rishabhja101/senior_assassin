@@ -1,5 +1,6 @@
 let participants = [];
 let kills = {};
+let states = {};
 let leaderboard = [];
 
 //display the leaderboard
@@ -36,6 +37,7 @@ function getLeaderboard(){
         temp["place"] = place;
         temp["name"] = sorted[i];
         temp["kills"] = kills[sorted[i]];
+        temp["state"] = states[sorted[i]];
         leaderboard[leaderboard.length] = temp;
         // console.log(place + " | " + sorted[i] + " : " + kills[sorted[i]])
     }
@@ -79,16 +81,21 @@ function load(){
     // position using the index of the data points
     drivers
         .append('td')
-        .text(({place}) => place)
+        .html (({place, state}) => `${state != "dead" ? `<span style="color:#11FE00">${place}</span>` : `<span style="color:red">${place}</span>`} `) //style="color:#11FE00"  <---- green color option
+        //.text(({place}) => place)
         .attr('class', 'position');
+    drivers
+        .append('td')  
+        .html (({name, state}) => `${state != "dead" ? `<span style="color:#11FE00">${name.charAt(0).toUpperCase() + name.split(" ")[0].slice(1) + " " + name.split(" ")[1].charAt(0).toUpperCase() + name.split(" ")[1].slice(1)}</span>` : `<span style="color:red">${name.charAt(0).toUpperCase() + name.split(" ")[0].slice(1) + " " + name.split(" ")[1].charAt(0).toUpperCase() + name.split(" ")[1].slice(1)}</span>`} `)  //string.charAt(0).toUpperCase() + 
+    
+
+  //  .html (({name, team}) => `${name.split(' ').map((part, index) => index > 0 ? `<strong>${part}</strong>` : `${part}`).join(' ')} <span>${team}</span>`)
 
     drivers
         .append('td')
-        .html (({name}) => `<span>${name}</span>`)
-    drivers
-        .append('td')
-        .html (({kills}) => `<span>${kills}</span>`)
+        .html (({kills, state}) => `${state != "dead" ? `<span style="color:#11FE00">${kills}</span>` : `<span style="color:red">${kills}</span>`} `)
 }
+
 
 
 $(document).ready(() => {
@@ -100,6 +107,7 @@ $(document).ready(() => {
             participantsArr.push(participant["name"]);
         //    kills[participant["name"]] = parseInt(participant["kills"], 10);
             kills[participant["name"]] = participant["kills"];
+            states[participant["name"]] = participant["state"];
          //   console.log(participant["kills"]);
         }
         participants = participantsArr;
