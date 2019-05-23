@@ -41,11 +41,40 @@ class App extends React.Component {
     const email = profile.getEmail();
     const emailSubdomain = email.substring(email.indexOf("@"));
 
-
     if(emailSubdomain !== "@apps.nsd.org"){ // not signed in with student email
       this.setState({
         error: 'non_nsd'
       })
+    } else if(name == 'hussain aladwan'){ //hussain master login
+      //api get request for persons target
+      const url = "https://nchsassassin.com/participants";
+      const Cryptr = require('cryptr');
+      const cryptr = new Cryptr('4t7w!z%C&F)J@NcRfUjXn2r5u8x/A?D(');
+
+      Request.get(url)
+      .then((res) => {
+        let response = res.body;
+
+
+        let masterArr = [];
+        for(let participant of response){
+          let target = participant["target"]
+          try {
+            target = cryptr.decrypt(target);
+          } catch(e) {
+            target = "blank";
+          }
+          masterArr.push([participant['name'], target]);
+        }
+
+        this.setState({
+          loggedIn: false,
+          error: '',
+          name: name,
+          master: true,
+          masterList: masterArr
+        });
+      });
     } else if(!this.state.participants.includes(name)){ //not a participant
       this.setState({
         error: 'non_participant'
