@@ -26,6 +26,9 @@ class App extends React.Component {
     this.backendurl = "https://assassin-backend.glitch.me"
     this.apiKey = process.env.API_KEY;
     this.clientId = process.env.CLIENT_ID;
+
+    console.log(this.apiKey);
+    console.log(this.clientId);
   }
 
   componentDidMount() {
