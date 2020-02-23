@@ -1,6 +1,7 @@
 import React from 'react';
-import Request from 'superagent';
-import GoogleLogin from 'react-google-login';
+import LoginScreen from './components/LoginScreen.js';
+import AdminPanel from './components/AdminPanel.js';
+import MainPage from './components/MainPage.js';
 
 class App extends React.Component {
   constructor(props){
@@ -11,29 +12,37 @@ class App extends React.Component {
       name: '',
       email: '',
       target: '',
-      participants: [],
-      data: null,
       master: false,
-      masterList: null
+      participants: null,
+      killSelectValue: "default",
+      admins: ["kyle mumma", "hussain aladwan"]
     }
 
     this.onSignIn = this.onSignIn.bind(this);
+    this.onKillChange = this.onKillChange.bind(this);
+    this.onKillSubmit = this.onKillSubmit.bind(this);
+    this.resetTargets = this.resetTargets.bind(this);
+
+    this.backendurl = "https://assassin-backend.glitch.me/"
+    this.apiKey = process.env.API_KEY;
+    this.clientId = process.env.CLIENT_ID;
   }
 
   componentDidMount() {
-    //make those MF API calls BOIIIIII
-    Request.get("https://nchsassassin.com/participants")
-    .then((res) => {
-      let participantsArr = [];
-      for(let participant of res.body){
-        participantsArr.push(participant["name"]);
-      }
-      this.setState({
-        data: res.body,
-        participants: participantsArr
+    // TODO: make api key for backend call
+    // TODO: update backend calls
+    // TODO: add api key to .env
+
+    fetch(this.backendurl + `/participants?key=${this.apiKey}`)
+      .then((response) => {
+        return response.json();
+      })
+      .then((myJson) => {
+        this.setState({
+          participants: myJson.participants
+        });
       });
-    });
-  }
+  } 
 
   onSignIn(googleUser) {
     const profile = googleUser.getBasicProfile();
@@ -45,60 +54,36 @@ class App extends React.Component {
       this.setState({
         error: 'non_nsd'
       })
-    } else if(name == 'hussain aladwan'){ //hussain master login
-      //api get request for persons target
-      const url = "https://nchsassassin.com/participants";
-      const Cryptr = require('cryptr');
-      const cryptr = new Cryptr('4t7w!z%C&F)J@NcRfUjXn2r5u8x/A?D(');
-
-      Request.get(url)
-      .then((res) => {
-        let response = res.body;
-
-
-        let masterArr = [];
-        for(let participant of response){
-          let target = participant["target"]
-          try {
-            target = cryptr.decrypt(target);
-          } catch(e) {
-            target = "blank";
-          }
-          masterArr.push([participant['name'], target]);
-        }
-
-        this.setState({
-          loggedIn: false,
-          error: '',
-          name: name,
-          master: true,
-          masterList: masterArr
-        });
-      });
-    } else if(!this.state.participants.includes(name)){ //not a participant
-      this.setState({
-        error: 'non_participant'
-      });
-    } else {
-      //api get request for persons target
-      const url = "https://nchsassassin.com/participants/" + name;
-      const Cryptr = require('cryptr');
-      const cryptr = new Cryptr('4t7w!z%C&F)J@NcRfUjXn2r5u8x/A?D(');
-
-      Request.get(url)
-      .then((res) => {
-        let target = res.body["target"];
-        try {
-          target = cryptr.decrypt(target);
-        } catch(e) {
-          target = "blank";
-        }
-
+    } else if(this.state.admins.includes(name)){ // master login
+      fetch(this.backendurl + `/participants?name=${name}?key=${this.apiKey}`)
+      .then((response) => {
+        return response.json();
+      })
+      .then((myJson) => {
         this.setState({
           loggedIn: true,
           error: '',
           name: name,
-          target: target,
+          target: myJson.target,
+          email: email,
+          master: true
+        });
+      });
+    } else if(!this.isParticipant(name)){ //not a participant
+      this.setState({
+        error: 'non_participant'
+      });
+    } else { // normal logged in
+      fetch(this.backendurl + `/participants?name=${name}?key=${this.apiKey}`)
+      .then((response) => {
+        return response.json();
+      })
+      .then((myJson) => {
+        this.setState({
+          loggedIn: true,
+          error: '',
+          name: name,
+          target: myJson.target,
           email: email,
           master: false
         });
@@ -106,67 +91,78 @@ class App extends React.Component {
     }
   }
 
+  onKillChange(event) {
+    this.setState({
+      killSelectValue: event.target.value
+    });
+  }
+
+  onKillSubmit(event) {
+    // kill POST request
+    if(window.confirm("Are you sure you want to kill " + this.state.killSelectValue + "?")){
+      const data = {
+        name: this.state.killSelectValue,
+        key: this.apiKey
+      };
+
+      const options = {
+        method: 'POST',
+        body: JSON.stringify(data),
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      };
+      fetch(this.backendurl + "/kill", options);
+      alert(this.state.killSelectValue + " was successfully killed");
+    }
+
+    event.preventDefault();
+  }
+
+  isParticipant(name) {
+    return this.state.participants.has(name);
+  }
+
+  resetTargets() {
+    if(window.confirm("Are you sure you want to reset the targets?")) {
+      const data = {key: this.apiKey};
+      const options = {
+        method: 'POST',
+        body: JSON.stringify(data),
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      };
+      fetch(this.backendurl + "/reset", options);
+      alert("targets were successfully reset");
+    }
+  }
+
   render() {
     //if logged in and no errors
-    if(this.state.loggedIn && this.state.error === ''){
-      return(
-        <div className="App text-center container">
-          <h1 className="display-4">NCHS Senior Assassin</h1>
-          <p className="lead">Welcome back {this.state.name}</p>
-          <p className="lead">your target for this week is {this.state.target}</p>
-        
-          <p style={{"position":"fixed", "bottom":"10px", "left": "50%", "transform": "translateX(-50%)", "width": "100%"}}>Website made by <a href="https://kylemumma.me">Kyle Mumma</a> and 
-          <a href="https://linkedin.com/in/rishabhjain101"> Rishabh Jain</a></p>
-        </div>
-      );
+    if(this.state.loggedIn && this.state.error === '' && !this.state.master){
+      return <MainPage name={this.state.name} target={this.state.target} />;
     }
 
     //if master login
     if(this.state.master){
-      const targetsObject = this.state.masterList.map(x => <li className="list-group-item">{x[0]} : {x[1]}</li>);
-
-      return(
-        <div className="App text-center container">
-          <h1 className="display-4">NCHS Senior Assassin</h1>
-          <p className="lead">Welcome back daddy {this.state.name}</p>
-
-          <ul className="list-group">
-            <li className="list-group-item active">Targets</li>
-            {targetsObject}
-          </ul>
-        </div>
-      );
+      return <AdminPanel onKillSubmit={this.onKillSubmit} onKillChange={this.onKillChange} 
+      killSelectValue={this.state.killSelectValue} resetTargets={this.resetTargets}
+      participants={this.state.participants} name={this.state.name} target={this.state.target} />;
     }
 
     //if not logged in or error
     let errorMessage = null;
     if(this.state.error === 'non_nsd'){
-      errorMessage = <p className="alert alert-danger">Error: You must log in with your apps.nsd.org student email</p>
+      errorMessage = "Error: You must log in with your apps.nsd.org student email"
     } else if(this.state.error === 'non_participant'){
-      errorMessage = <p className="alert alert-danger">
-                        Error: You are not registered for Senior Assassin,
-                        if this is an error please contact Monica Potts on instagram
-                        <a href="https://www.instagram.com/monicapottts" target="_blank"> @monicapottts</a>
-                      </p>
+      errorMessage = <div>Error: You are not registered for Senior Assassin,
+        if this is an error please contact Jaguar Senior Assassin on instagram 
+        <a href='https://www.instagram.com/jaguarseniorassassin/'>@jaguarseniorassassin</a></div>;
     }
 
-    return (
-      <div className="App text-center container">
-        <h1 className="display-4">NCHS Senior Assassin</h1>
-
-        {errorMessage}
-        <GoogleLogin
-          clientId="406456758580-snl7rfngdoidunla1jsanccm1l9odi8i.apps.googleusercontent.com"
-          buttonText="Sign In with Google"
-          onSuccess={this.onSignIn}
-          onFailure={this.onSignIn}
-          cookiePolicy={'single_host_origin'}
-        />
-
-        <p style={{"position":"fixed", "bottom":"10px", "left": "50%", "transform": "translateX(-50%)", "width": "100%"}}>Website made by <a href="https://kylemumma.me">Kyle Mumma</a> and 
-          <a href="https://linkedin.com/in/rishabhjain101"> Rishabh Jain</a></p>
-      </div>
-    );
+    // login screen
+    return <LoginScreen errorMessage={errorMessage} onSignIn={this.onSignIn} clientId={this.clientId}/>
   }
 }
 
