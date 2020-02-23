@@ -116,7 +116,7 @@ class App extends React.Component {
   }
 
   isParticipant(name) {
-    return this.state.participants.has(name);
+    return this.state.participants.includes(name);
   }
 
   resetTargets() {
