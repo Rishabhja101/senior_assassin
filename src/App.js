@@ -15,7 +15,7 @@ class App extends React.Component {
       master: false,
       participants: null,
       killSelectValue: "default",
-      admins: ["kyle mumma", "hussain aladwan"]
+      admins: [/*"kyle mumma", */"hussain aladwan"]
     }
 
     this.onSignIn = this.onSignIn.bind(this);
