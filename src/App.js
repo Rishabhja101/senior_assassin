@@ -23,7 +23,7 @@ class App extends React.Component {
     this.onKillSubmit = this.onKillSubmit.bind(this);
     this.resetTargets = this.resetTargets.bind(this);
 
-    this.backendurl = "https://assassin-backend.glitch.me/"
+    this.backendurl = "https://assassin-backend.glitch.me"
     this.apiKey = process.env.API_KEY;
     this.clientId = process.env.CLIENT_ID;
   }
