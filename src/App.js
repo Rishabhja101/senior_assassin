@@ -24,8 +24,8 @@ class App extends React.Component {
     this.resetTargets = this.resetTargets.bind(this);
 
     this.backendurl = "https://assassin-backend.glitch.me"
-    this.apiKey = process.env.API_KEY;
-    this.clientId = process.env.CLIENT_ID;
+    this.apiKey = process.env.REACT_APP_API_KEY;
+    this.clientId = process.env.REACT_APP_CLIENT_ID;
 
     console.log(this.apiKey);
     console.log(this.clientId);
