@@ -13,7 +13,6 @@ function LoginScreen(props) {
   
           {errorComponent}
           <GoogleLogin
-            // TODO: add client id to .env
             clientId={props.clientId}
             buttonText="Sign In with Google"
             onSuccess={props.onSignIn}

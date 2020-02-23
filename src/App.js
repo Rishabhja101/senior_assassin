@@ -29,10 +29,6 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    // TODO: make api key for backend call
-    // TODO: update backend calls
-    // TODO: add api key to .env
-
     fetch(this.backendurl + `/participants?key=${this.apiKey}`)
       .then((response) => {
         return response.json();
