@@ -51,7 +51,7 @@ class App extends React.Component {
         error: 'non_nsd'
       })
     } else if(this.state.admins.includes(name)){ // master login
-      fetch(this.backendurl + `/participants?name=${name}?key=${this.apiKey}`)
+      fetch(this.backendurl + `/participants?name=${name}&key=${this.apiKey}`)
       .then((response) => {
         return response.json();
       })
@@ -70,7 +70,7 @@ class App extends React.Component {
         error: 'non_participant'
       });
     } else { // normal logged in
-      fetch(this.backendurl + `/participants?name=${name}?key=${this.apiKey}`)
+      fetch(this.backendurl + `/participants?name=${name}&key=${this.apiKey}`)
       .then((response) => {
         return response.json();
       })
