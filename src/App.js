@@ -7,6 +7,7 @@ class App extends React.Component {
   constructor(props){
     super(props);
     this.state = {
+      underConstruction: true,
       loggedIn: false,
       error: '',
       name: '',
@@ -135,6 +136,12 @@ class App extends React.Component {
   }
 
   render() {
+    // under construction
+    if(this.state.underConstruction) {
+      return <p className="alert alert-warning">the website is currently under construction, 
+      come back later tonight to see your target</p>;
+    }
+
     //if logged in and no errors
     if(this.state.loggedIn && this.state.error === '' && !this.state.master){
       return <MainPage name={this.state.name} target={this.state.target} />;
