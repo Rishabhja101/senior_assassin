@@ -1,6 +1,6 @@
 # Senior Assassin Web App
-Created using MERN stack <br/>
-Backend code can be found at [/Rishabhja101/SeniorAssassinWebAppBackend](https://github.com/Rishabhja101/SeniorAssassinWebAppBackend)
+Created using React, Node.js, NeDB, and Express stack <br/>
+Backend code running through private code base hosted on [glitch.com](https://glitch.com/)
 
 Website live at [https://nchsassassin.netlify.com](https://nchsassassin.netlify.com)
 
